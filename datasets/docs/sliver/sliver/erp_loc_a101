@@ -1,0 +1,13 @@
+insert into sliver.erp_loc_a101(
+CID,CNTRY
+)
+
+select
+REPLACE(CID,'-','')CID,
+case
+	when trim(CNTRY) = 'DE' then 'GERMANY'
+	when trim(CNTRY) in ('US' , 'USA') then 'UNITED STATES'
+	when trim(CNTRY) = '' or CNTRY is null then 'N/A'
+	else CNTRY
+	end as CNTRY
+from [bronze].[erp_loc_a101]
