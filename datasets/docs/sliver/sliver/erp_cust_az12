@@ -1,0 +1,23 @@
+insert into sliver.erp_cust_az12(
+CID,
+BDATE,
+GEN
+)
+
+select
+case
+	when CID like 'NAS%' then SUBSTRING( CID, 4,len(CID))
+	else CID
+end as CID,
+
+case
+	when BDATE > GETDATE() then null
+	else BDATE
+	end as BDATE,
+case
+	when upper(TRIM(GEN)) in( 'F' ,'Female') then 'Female'
+	when upper(TRIM(GEN)) in ('M' ,'Male') then 'Male'
+	else 'N/A'
+	end as GEN
+
+from bronze.erp_cust_az12
